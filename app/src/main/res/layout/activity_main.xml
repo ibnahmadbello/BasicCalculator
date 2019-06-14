@@ -20,8 +20,11 @@
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
             android:lines="1"
-            android:gravity="end" />
+            android:gravity="end"
+            android:inputType="number"/>
         <TextView
+            android:id="@+id/operator"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_weight="0.1"
             android:layout_height="wrap_content" />
@@ -33,7 +36,8 @@
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
             android:lines="1"
-            android:gravity="end" />
+            android:gravity="end"
+            android:inputType="number"/>
 
     </LinearLayout>
 
@@ -42,7 +46,10 @@
     <TextView
         android:id="@+id/result_display"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size"
+        android:gravity="end"/>
 
     <LinearLayout
         android:id="@+id/row_one"
