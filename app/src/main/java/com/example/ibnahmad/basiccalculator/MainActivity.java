@@ -1,8 +1,14 @@
 package com.example.ibnahmad.basiccalculator;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,8 +29,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         resultTextView = findViewById(R.id.result_display);
         operatorTextView = findViewById(R.id.operator);
+
         editTextOne = findViewById(R.id.calculation_area_one);
+        editTextOne.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.onTouchEvent(event);
+                InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null){
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+                return true;
+            }
+        });
+
         editTextTwo = findViewById(R.id.calculation_area_two);
+        editTextTwo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.onTouchEvent(event);
+                InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null){
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+                return true;
+            }
+        });
 
         buttonOne = findViewById(R.id.one);
         buttonOne.setOnClickListener(this);
@@ -73,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonClearScreen = findViewById(R.id.clear_screen);
         buttonClearScreen.setOnClickListener(this);
+
     }
 
     @Override
@@ -133,8 +164,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.six:
                 if (editTextOne.isFocused()){
+                    editTextOne.setInputType(InputType.TYPE_NULL);
                     editTextOne.getText().append("6");
                 } else if (editTextTwo.isFocused()){
+                    editTextTwo.setInputType(InputType.TYPE_NULL);
                     editTextTwo.getText().append("6");
                 }
                 break;
@@ -208,5 +241,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return result;
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
